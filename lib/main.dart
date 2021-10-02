@@ -27,6 +27,7 @@ class _CounterAppState extends State<CounterApp> {
   int football = 0;
   int anime = 0;
   int code = 0;
+  String textResult = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +44,35 @@ class _CounterAppState extends State<CounterApp> {
             children: [
               Text('Score for Today'),
               Text('$totalScore'),
-              TextButton(onPressed: () {
-                setState(() {
-                  totalScore = football + anime + code;
-                });
-              }, child: Text('Calculate total Score'))
+              Text(textResult),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: () {
+                    setState(() {
+                      totalScore = football + anime + code;
+                      if (totalScore == 300){
+                        textResult = 'Perfect Score';
+                      }else if (totalScore > 100 && totalScore < 300 ){
+                        textResult = 'You can do better tomorrow';
+                      }else if (totalScore < 100){
+                        textResult = 'I don\'t know what to say';
+                      }
+                    });
+                  }, child: Text('Calculate total Score')),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        totalScore = 0;
+                        football = 0;
+                        anime = 0;
+                        code = 0;
+                      });
+                    },
+                    child: Text('Clear'),
+                  )
+                ],
+              ),
           ],
         ),
             SizedBox(height: 30,),
